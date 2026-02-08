@@ -1,0 +1,7 @@
+<svg width="200" height="50" viewBox="0 0 200 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M25 2L12 25H22L15 48L38 22H26L35 2Z" fill="#0ea5e9" stroke="#0ea5e9" stroke-width="2" stroke-linejoin="round"/>
+  
+  <text x="50" y="32" font-family="sans-serif" font-size="24" font-weight="bold" fill="#ffffff">Career</text>
+  
+  <text x="132" y="32" font-family="sans-serif" font-size="24" font-weight="bold" fill="#0ea5e9">Forge</text>
+</svg>

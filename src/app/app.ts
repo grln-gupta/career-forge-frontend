@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './app.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -12,61 +12,90 @@ import { ApiService } from './app.service';
   styleUrls: ['./app.css']
 })
 export class AppComponent {
-  // 1. Data Models
+  // Data Models
   inputText: string = '';
-  selectedMode: string = 'resume'; // Default
-  targetRole: string = 'Senior Developer'; // Default
+  selectedMode: string = 'resume'; // <--- CHANGED TO RESUME
+  targetRole: string = 'Senior Developer'; // <--- CHANGED TO GENERIC ROLE
   
   optimizedResult: string = '';
   isLoading: boolean = false;
   errorMessage: string = '';
+  copySuccess: boolean = false; 
 
   constructor(private apiService: ApiService) {}
 
-  // 2. The Main Function
+  // Sidebar Logic
+  setMode(mode: string) {
+    this.selectedMode = mode;
+    this.optimizedResult = ''; 
+    this.errorMessage = '';
+    this.copySuccess = false;
+  }
+
+  // Dynamic Header
+  getTitle(): string {
+    switch(this.selectedMode) {
+      case 'resume': return 'Resume ATS Fixer';
+      case 'linkedin': return 'LinkedIn Viral Post';
+      case 'portfolio': return 'Case Study Builder';
+      default: return 'Career Forge';
+    }
+  }
+
+  getSubtitle(): string {
+    switch(this.selectedMode) {
+      case 'resume': return 'Optimize your bullet points for high-frequency ATS keywords.';
+      case 'linkedin': return 'Turn boring updates into viral, engaging professional stories.';
+      case 'portfolio': return 'Structure your projects into professional STAR-method case studies.';
+      default: return 'AI Optimization Tool';
+    }
+  }
+
+  // API Call
   runOptimization() {
-    // Validation: Don't run if empty
     if (!this.inputText.trim()) {
-      this.errorMessage = 'Please enter some text to optimize.';
+      this.errorMessage = 'Please enter some text first.';
       return;
     }
 
     this.isLoading = true;
     this.errorMessage = '';
-    this.optimizedResult = '';
+    this.copySuccess = false;
 
-    // --- CRITICAL FIX IS HERE ---
-    // We create a specific object that matches the Python Backend exactly.
     const payload = {
-      text: this.inputText,   // Python expects "text"
-      mode: this.selectedMode, // Python expects "mode"
-      role: this.targetRole    // Python expects "role"
+      text: this.inputText,
+      mode: this.selectedMode,
+      role: this.targetRole
     };
 
-    console.log('Sending to Backend:', payload); // Debugging
-
-    // 3. Send to API
     this.apiService.optimizeContent(payload).subscribe({
       next: (response: any) => {
-        console.log('Success:', response);
-        this.optimizedResult = response.optimized; // Show result
+        this.optimizedResult = response.optimized;
         this.isLoading = false;
       },
-      error: (error: any) => {
-        console.error('Error:', error);
-        this.errorMessage = 'Connection failed. Please try again.';
+      error: (error) => {
+        console.error(error);
+        this.errorMessage = 'AI service is busy. Please try again in a moment.';
         this.isLoading = false;
       }
     });
   }
 
-  // Helper for UI Button Text
-  getButtonText(): string {
-    if (this.isLoading) return 'Optimizing...';
-    switch (this.selectedMode) {
-      case 'resume': return 'Rewrite for Resume';
-      case 'linkedin': return 'Generate LinkedIn Post';
-      default: return 'Optimize Text';
-    }
+  // Action Buttons
+  copyToClipboard() {
+    navigator.clipboard.writeText(this.optimizedResult).then(() => {
+      this.copySuccess = true;
+      setTimeout(() => this.copySuccess = false, 2000); 
+    });
+  }
+
+  downloadContent() {
+    const blob = new Blob([this.optimizedResult], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `career-forge-${this.selectedMode}-${Date.now()}.txt`;
+    a.click();
+    window.URL.revokeObjectURL(url);
   }
 }

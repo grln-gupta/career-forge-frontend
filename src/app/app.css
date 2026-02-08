@@ -1,72 +1,225 @@
+/* 1. LAYOUT & RESET */
 :host {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   display: block;
-  background-color: #f3f4f6;
-  min-height: 100vh;
-  padding: 2rem;
+  height: 100vh;
+  color: white;
+  background-color: #0f172a; /* Dark Navy Background */
 }
 
-.container {
-  max-width: 600px;
-  margin: 0 auto;
+.app-container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* 2. SIDEBAR STYLES */
+.sidebar {
+  width: 260px;
+  background-color: #1e293b; /* Slightly lighter dark */
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #334155;
+}
+
+.brand {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 3rem;
+  color: #f8fafc;
+}
+
+.ai-tag {
+  color: #38bdf8; /* Light Blue */
+}
+
+.nav-item {
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #94a3b8;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.nav-item:hover {
+  background-color: #334155;
+  color: white;
+}
+
+.nav-item.active {
+  background-color: #0ea5e9; /* Brand Blue */
+  color: white;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+}
+
+.footer-version {
+  margin-top: auto;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+/* 3. MAIN CONTENT STYLES */
+.main-content {
+  flex: 1;
+  padding: 3rem;
+  overflow-y: auto;
 }
 
 header {
-  text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
-h1 { color: #111827; margin-bottom: 0.5rem; }
-p { color: #6b7280; }
-
-.card {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  margin-bottom: 1.5rem;
+h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
 }
 
-.form-group { margin-bottom: 1rem; }
+p {
+  color: #94a3b8;
+}
 
+/* 4. GRID SYSTEM */
+.workspace-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Split 50/50 */
+  gap: 3rem;
+}
+
+@media (max-width: 1000px) {
+  .workspace-grid { grid-template-columns: 1fr; } /* Stack on smaller screens */
+}
+
+/* 5. FORM INPUTS */
 label {
   display: block;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: #374151;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #cbd5e1;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.05em;
 }
 
-input, select, textarea {
+.required { color: #f43f5e; }
+
+input, textarea {
   width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #d1d5db;
+  background-color: #1e293b;
+  border: 1px solid #334155;
   border-radius: 8px;
-  font-size: 1rem;
+  padding: 1rem;
+  color: white;
+  font-family: inherit;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
 }
 
-textarea { resize: vertical; }
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #38bdf8;
+}
 
-.primary-btn {
+.textarea-wrapper {
+  position: relative;
+}
+
+.icon-badge {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  background: #334155;
+  padding: 5px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+}
+
+/* 6. MAIN BUTTON */
+.optimize-btn {
   width: 100%;
-  padding: 0.75rem;
-  background-color: #2563eb;
-  color: white;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
   border: none;
   border-radius: 8px;
-  font-weight: bold;
+  color: white;
+  font-weight: 700;
+  letter-spacing: 0.05em;
   cursor: pointer;
-  transition: background 0.2s;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+  transition: transform 0.1s;
 }
 
-.primary-btn:hover { background-color: #1d4ed8; }
-.primary-btn:disabled { background-color: #93c5fd; cursor: not-allowed; }
+.optimize-btn:hover { transform: translateY(-2px); }
+.optimize-btn:active { transform: translateY(0); }
+.optimize-btn:disabled { background: #475569; cursor: not-allowed; transform: none; }
 
+/* 7. OUTPUT SECTION & ACTIONS */
+.output-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.icon-btn {
+  background: #334155;
+  border: 1px solid #475569;
+  color: #e2e8f0;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.icon-btn:hover {
+  background: #475569;
+  border-color: #64748b;
+  color: white;
+}
+
+/* 8. RESULT BOX */
 .result-box {
-  background: #f0fdf4;
-  padding: 1rem;
-  border-left: 4px solid #22c55e;
-  border-radius: 4px;
-  margin-top: 1rem;
+  background-color: #1e293b; /* Dark Card */
+  border: 2px dashed #334155;
+  border-radius: 12px;
+  height: 400px;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
 }
 
-.error { color: #dc2626; text-align: center; margin-top: 1rem; }
+.result-box.has-content {
+  border-style: solid;
+  border-color: #334155;
+  align-items: flex-start; /* Align text to top */
+}
+
+.placeholder-text {
+  color: #475569;
+  font-style: italic;
+}
+
+.final-text {
+  white-space: pre-wrap;
+  color: #e2e8f0;
+  line-height: 1.6;
+}
+
+.error-msg {
+  color: #f43f5e;
+  margin-top: 1rem;
+  text-align: center;
+}
