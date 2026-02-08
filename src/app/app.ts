@@ -18,8 +18,8 @@ export class AppComponent implements OnInit {
   // Data Models
   inputText: string = '';
   selectedMode: string = 'resume'; // <--- CHANGED TO RESUME
-  targetRole: string = 'Senior Developer'; // <--- CHANGED TO GENERIC ROLE
-  
+  targetRole: string = '';
+  isMobileMenuOpen: boolean = false;
   optimizedResult: string = '';
   isLoading: boolean = false;
   errorMessage: string = '';
@@ -29,6 +29,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.inputText = '';
+
     // It warms up the connection while the user is typing.
     console.log('⚡ Waking up Backend...');
     fetch('https://career-forge-backend-j7lq.onrender.com/docs')
@@ -41,9 +42,13 @@ export class AppComponent implements OnInit {
     this.selectedMode = mode;
     this.optimizedResult = ''; 
     this.errorMessage = '';
+    this.isMobileMenuOpen = false;
     this.copySuccess = false;
   }
 
+  toggleMobileMenu() {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
   // Dynamic Header
   getTitle(): string {
     switch(this.selectedMode) {

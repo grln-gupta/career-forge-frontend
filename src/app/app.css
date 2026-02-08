@@ -1,372 +1,386 @@
-/* 1. LAYOUT & RESET */
-:host {
-  font-family: 'Inter', system-ui, sans-serif;
-  display: block;
-  height: 100vh;
-  color: white;
-  background-color: #0f172a; /* Dark Navy Background */
+/* --- 1. BASE THEME & RESET --- */
+:host { 
+  font-family: 'Inter', sans-serif; 
+  background-color: #0f172a; 
+  display: block; 
+  height: 100vh; 
+  color: white; 
+  box-sizing: border-box; 
 }
 
-.app-container {
-  display: flex;
-  height: 100vh;
-  overflow: hidden;
+*, *::before, *::after { box-sizing: inherit; }
+
+.app-container { 
+  display: flex; 
+  height: 100vh; 
+  width: 100vw; 
+  overflow: hidden; 
 }
 
-/* 2. SIDEBAR STYLES */
-.sidebar {
-  width: 260px;
-  background-color: #1e293b; /* Slightly lighter dark */
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  border-right: 1px solid #334155;
+/* --- 2. SIDEBAR & BRAND --- */
+.sidebar { 
+  width: 280px; 
+  background-color: #111827; 
+  padding: 24px; 
+  border-right: 1px solid #334155; 
+  display: flex; 
+  flex-direction: column; 
+  z-index: 1000; 
 }
 
-.brand {
-  font-size: 1.25rem;
-  font-weight: 800;
-  margin-bottom: 3rem;
-  color: #f8fafc;
+.brand { 
+  display: flex; 
+  align-items: center; 
+  gap: 10px; 
+  margin-bottom: 40px; 
+  font-size: 1.25rem; 
+  font-weight: 800; 
+  color: #f8fafc; 
 }
 
-.ai-tag {
-  color: #38bdf8; /* Light Blue */
+.ai-tag { color: #38bdf8; }
+
+.hamburger-btn { 
+  display: none; 
+  background: #1e293b; 
+  border: 1px solid #334155; 
+  color: white; 
+  padding: 8px 12px; 
+  border-radius: 6px; 
+  cursor: pointer; 
 }
+
+/* --- 3. NAV & STAGGERED ANIMATIONS --- */
+nav { display: flex; flex-direction: column; gap: 10px; }
 
 .nav-item {
-  padding: 12px 16px;
-  margin-bottom: 8px;
-  border-radius: 8px;
+  text-align: left; 
+  padding: 14px; 
+  background: transparent; 
+  border: none; 
+  border-radius: 8px; 
+  color: #94a3b8; 
   cursor: pointer;
-  color: #94a3b8;
-  font-weight: 500;
-  transition: all 0.2s;
+  position: relative;
+  opacity: 0; /* Starts hidden for stagger effect */
+  transform: translateX(-20px);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.nav-item:hover {
-  background-color: #334155;
-  color: white;
+/* Interaction Effects */
+.nav-item:hover { 
+  transform: translateY(-2px); 
+  color: #38bdf8; 
+  background: rgba(56, 189, 248, 0.05); 
 }
 
-.nav-item.active {
-  background-color: #0ea5e9; /* Brand Blue */
-  color: white;
-  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+.nav-item:active { transform: scale(0.96); }
+
+.nav-item.active { 
+  background: linear-gradient(90deg, #0ea5e9, #0284c7); 
+  color: white; 
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3); 
 }
 
-.footer-version {
-  margin-top: auto;
-  font-size: 0.75rem;
-  color: #64748b;
+/* Desktop Sidebar visibility */
+@media (min-width: 1025px) {
+  .nav-item { opacity: 1; transform: translateX(0); }
 }
 
-/* 3. MAIN CONTENT STYLES */
-.main-content {
-  flex: 1;
-  padding: 3rem;
-  overflow-y: auto;
+/* Staggered Entrance for Mobile Menu */
+nav.show .nav-item { opacity: 1; transform: translateX(0); }
+nav.show .nav-item:nth-child(1) { transition-delay: 0.1s; }
+nav.show .nav-item:nth-child(2) { transition-delay: 0.2s; }
+nav.show .nav-item:nth-child(3) { transition-delay: 0.3s; }
+
+/* --- 4. MAIN WORKSPACE --- */
+.main-content { 
+  flex: 1; 
+  display: flex; 
+  flex-direction: column; 
+  padding: 40px; 
+  overflow-y: auto; 
 }
 
-header {
-  margin-bottom: 3rem;
+.workspace-grid { 
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  gap: 40px; 
+  flex: 1; 
 }
 
-h1 {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-  font-weight: 700;
+.form-group { margin-bottom: 25px; }
+
+label { 
+  display: block; 
+  font-size: 0.75rem; 
+  color: #94a3b8; 
+  font-weight: 700; 
+  margin-bottom: 8px; 
+  text-transform: uppercase; 
 }
 
-p {
-  color: #94a3b8;
-}
-
-/* 4. GRID SYSTEM */
-.workspace-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* Split 50/50 */
-  gap: 3rem;
-}
-
-@media (max-width: 1000px) {
-  .workspace-grid { grid-template-columns: 1fr; } /* Stack on smaller screens */
-}
-
-/* 5. FORM INPUTS */
-label {
-  display: block;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #cbd5e1;
-  margin-bottom: 0.75rem;
-  letter-spacing: 0.05em;
-}
-
-.required { color: #f43f5e; }
-
-input, textarea {
-  width: 100%;
-  background-color: #1e293b;
-  border: 1px solid #334155;
-  border-radius: 8px;
-  padding: 1rem;
-  color: white;
-  font-family: inherit;
-  font-size: 0.95rem;
-  box-sizing: border-box;
+input, textarea { 
+  width: 100%; 
+  background: #1e293b; 
+  border: 1px solid #334155; 
+  border-radius: 8px; 
+  padding: 16px; 
+  color: white; 
+  font-size: 1rem; 
   transition: border-color 0.2s;
 }
 
-input:focus, textarea:focus {
-  outline: none;
-  border-color: #38bdf8;
-}
+input:focus, textarea:focus { outline: none; border-color: #38bdf8; }
 
-.textarea-wrapper {
-  position: relative;
-}
 
-.icon-badge {
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
-  background: #334155;
-  padding: 5px;
-  border-radius: 50%;
-  font-size: 1.2rem;
-}
-
-/* 6. MAIN BUTTON */
 .optimize-btn {
-  width: 100%;
-  margin-top: 1.5rem;
-  padding: 1rem;
-  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-  border: none;
-  border-radius: 8px;
-  color: white;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  cursor: pointer;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
-  transition: transform 0.1s;
+  width: 100%; 
+  padding: 16px; 
+  background: #0ea5e9; 
+  border: none; 
+  border-radius: 8px; 
+  color: white; 
+  font-weight: 700; 
+  cursor: pointer; 
+  margin-top: 10px;
+  transition: all 0.2s ease;
 }
 
-.optimize-btn:hover { transform: translateY(-2px); }
-.optimize-btn:active { transform: translateY(0); }
-.optimize-btn:disabled { background: #475569; cursor: not-allowed; transform: none; }
-
-/* 7. OUTPUT SECTION & ACTIONS */
-.output-header {
+.optimize-btn:active { transform: scale(0.98); filter: brightness(1.2); }
+/* Container to keep icon and text aligned */
+.btn-content {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.75rem;
-}
-
-.actions {
-  display: flex;
+  justify-content: center;
   gap: 10px;
 }
 
-.icon-btn {
-  background: #334155;
-  border: 1px solid #475569;
-  color: #e2e8f0;
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 0.8rem;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.2s;
+/* Small spinner specifically for the button */
+.spinner-sm {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
 }
 
-.icon-btn:hover {
-  background: #475569;
-  border-color: #64748b;
-  color: white;
+/* Pulsing effect for the loading text */
+.loading-text {
+  letter-spacing: 1px;
+  animation: breath 1.5s ease-in-out infinite;
 }
 
-/* 8. RESULT BOX */
-.result-box {
-  background-color: #1e293b; /* Dark Card */
-  border: 2px dashed #334155;
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes breath {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(0.98); }
+}
+
+/* Tactile feedback on click */
+.optimize-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+/* --- 5. THE GAP & BULLET FIX --- */
+.result-container {
+  flex: 1; 
+  display: flex; 
+  flex-direction: column; 
+  border: 2px dashed #334155; 
   border-radius: 12px;
-  height: 400px;
-  padding: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow-y: auto;
+  background: rgba(30, 41, 59, 0.3); 
+  padding: 24px; 
+  min-height: 450px; 
+  position: relative;
 }
 
-.result-box.has-content {
-  border-style: solid;
-  border-color: #334155;
-  align-items: flex-start; /* Align text to top */
+.placeholder-state { 
+  margin: auto; 
+  text-align: center; 
+  color: #64748b; 
+  animation: fadeIn 1s ease; 
 }
 
-.placeholder-text {
-  color: #475569;
-  font-style: italic;
-}
-
-.final-text {
-  white-space: pre-wrap;
-  color: #e2e8f0;
-  line-height: 1.6;
-}
-
-.error-msg {
-  color: #f43f5e;
-  margin-top: 1rem;
-  text-align: center;
-}
 .optimized-text {
-  /* THIS IS THE FIX FOR BULLET POINTS */
+  flex: 1; 
   white-space: pre-wrap !important; 
-  word-wrap: break-word;
-  
-  /* THIS FIXES VISIBILITY (Prevents text from cutting off) */
-  color: #e2e8f0;
-  line-height: 1.6;
-  font-size: 1rem;
-  padding: 10px;
-}
-
-/* Ensure the container allows scrolling if text is long */
-.result-content {
-  overflow-y: auto !important;
-  max-height: 600px; /* Adjust based on your screen size */
-}
-
-/* Space between the Textarea and the Target Role input */
-.form-group {
-  margin-bottom: 30px !important; 
-}
-
-/* Space for the Bottom Buttons */
-.actions {
-  display: flex;
-  gap: 15px;
-  margin-top: 25px !important; /* Adds space above Copy/PDF/DOCX buttons */
-  padding-bottom: 20px;       /* Adds space at the very bottom of the panel */
-}
-
-/* Ensure the main Optimize button isn't touching the inputs */
-.primary-btn {
-  margin-top: 20px !important;
-}
-/* --- Placeholder Message Styling --- */
-
-.placeholder-state {
-  flex: 1;
-  border: 2px dashed #334155; /* The dashed border from your screenshot */
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #64748b;
-  background-color: rgba(30, 41, 59, 0.3);
-}
-
-/* Add/Update in app.component.css */
-
-/* 1. MATCH BUTTONS TO THEME *//* THE FIX: Centers the message when no data exists */
-.placeholder-state {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #64748b;
-  text-align: center;
-}
-
-/* THE FIX: Formatting for AI Text */
-.optimized-text {
-  flex: 1;
-  white-space: pre-wrap !important; /* Forces next-line for bullets */
-  word-wrap: break-word;
+  color: #f1f5f9; 
+  line-height: 1.6; 
   overflow-y: auto;
-  color: #f1f5f9;
-  line-height: 1.6;
-  padding-right: 10px;
+  padding-bottom: 20px; 
+  animation: contentReveal 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
 
-/* --- ACTION BUTTONS --- */
-.actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 20px;
-  padding-top: 20px;
-  border-top: 1px solid #334155;
+/* --- 6. ACTION BUTTONS --- */
+.actions { 
+  display: flex; 
+  gap: 12px; 
+  border-top: 1px solid #334155; 
+  padding-top: 20px; 
 }
 
-.actions button {
-  flex: 1;
-  padding: 12px;
-  background-color: #1e293b;
-  border: 1px solid #334155;
-  color: #f1f5f9;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+.actions button { 
+  flex: 1; 
+  padding: 12px; 
+  background: #1e293b; 
+  border: 1px solid #334155; 
+  color: white; 
+  border-radius: 8px; 
+  cursor: pointer; 
+  font-weight: 600; 
+  transition: all 0.2s; 
 }
 
-.actions button:hover {
+.actions button:hover { 
+  transform: translateY(-3px); 
+  border-color: #0ea5e9; 
   background-color: #334155;
-  border-color: #0ea5e9;
 }
-/* .placeholder-state {
-  flex: 1;
+
+/* --- 7. LOADING & PULSE --- */
+.loader-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 2px dashed #334155;
-  border-radius: 12px;
-  color: #64748b;
-  text-align: center;
-  padding: 40px;
-  background-color: rgba(30, 41, 59, 0.2);
+  height: 100%;
 }
 
-.icon-placeholder {
-  font-size: 3rem;
-  margin-bottom: 15px;
-  opacity: 0.5;
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(14, 165, 233, 0.1);
+  border-top-color: #0ea5e9;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
 }
 
-/* --- Visibility & Bullet Points Fix --- 
-.optimized-text {
-  white-space: pre-wrap !important; /* Forces next-line for bullets
-  word-wrap: break-word;
-  color: #f1f5f9;
-  line-height: 1.6;
-  font-size: 1rem;
-  margin-bottom: 20px;
-}
-
-/* --- Spacing Fix for Bottom Buttons --- 
-.actions {
-  display: flex;
-  gap: 12px;
-  margin-top: auto; /* Pushes buttons to bottom 
-  padding-top: 20px;
-  border-top: 1px solid #334155;
-}
-
-.actions button {
-  flex: 1;
-  padding: 12px;
-  border-radius: 8px;
+.loader-container p {
+  margin-top: 15px;
   font-weight: 600;
-  cursor: pointer;
-} */
+  color: #38bdf8;
+  animation: pulse 1.5s infinite;
+}
+
+/* --- 8. MOBILE RESPONSIVE --- */
+@media (max-width: 1024px) {
+  .sidebar-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important; /* Centers the brand logo */
+    position: relative !important;      /* Necessary for absolute positioning of ham icon */
+    width: 100%;
+    min-height: 50px;
+    padding: 10px 0;
+  }
+
+  .brand {
+    margin-bottom: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    justify-content: center !important;
+    width: auto !important;
+  }
+
+  .hamburger-btn {
+    display: block !important;
+    position: absolute !important;     /* Removes it from the flex flow to keep logo centered */
+    right: 0 !important;               /* Locks it to the far right */
+    top: 50% !important;
+    transform: translateY(-50%) !important; /* Perfect vertical centering */
+    background: #1e293b;
+    border: 1px solid #334155;
+    padding: 8px 12px;
+    border-radius: 6px;
+    z-index: 1001;
+  }
+
+  /* Ensure the nav slides from the center-aligned header */
+  nav {
+    width: 100%;
+    text-align: center;
+  }
+}
+/* --- ANIMATIONS --- */
+@keyframes contentReveal { 
+  0% { opacity: 0; transform: translateY(15px); filter: blur(5px); } 
+  100% { opacity: 1; transform: translateY(0); filter: blur(0); } 
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+
+/* --- UPDATED MOBILE RESPONSIVE FIX --- */
+@media (max-width: 1024px) {
+  .app-container { 
+    flex-direction: column; 
+    height: auto; 
+    overflow-y: auto; 
+  }
+
+  .sidebar { 
+    width: 100% !important; 
+    border-bottom: 1px solid #334155; 
+    padding: 15px 25px;
+  }
+
+  .sidebar-header {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100%;
+  }
+
+  /* 1. THE SMOOTH NAV CONTAINER */
+  nav { 
+    display: flex !important; /* Always flex, but hidden via height/opacity */
+    flex-direction: column;
+    width: 100%;
+    
+    /* Animation Properties */
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+    padding-top: 0;
+    
+    /* cubic-bezier gives it a premium "bounce" rather than a robotic slide */
+    transition: 
+      max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+      opacity 0.4s ease, 
+      visibility 0.4s;
+  }
+
+  /* 2. THE OPEN STATE */
+  nav.show { 
+    max-height: 500px; /* Large enough to fit all nav items */
+    opacity: 1;
+    visibility: visible;
+    padding-top: 20px;
+    padding-bottom: 10px;
+  }
+
+  .hamburger-btn { 
+    display: block !important; 
+    transition: transform 0.3s ease;
+  }
+
+  /* Bonus: Rotate the 'X' or '☰' slightly when clicked */
+  .hamburger-btn:active {
+    transform: rotate(90deg);
+  }
+
+  .workspace-grid { grid-template-columns: 1fr; gap: 30px; }
+  .main-content { padding: 20px; }
+}
