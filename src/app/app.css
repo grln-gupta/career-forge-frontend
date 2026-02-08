@@ -259,13 +259,78 @@ input:focus, textarea:focus {
   margin-top: 20px !important;
 }
 /* --- Placeholder Message Styling --- */
+
+.placeholder-state {
+  flex: 1;
+  border: 2px dashed #334155; /* The dashed border from your screenshot */
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  background-color: rgba(30, 41, 59, 0.3);
+}
+
+/* Add/Update in app.component.css */
+
+/* 1. MATCH BUTTONS TO THEME *//* THE FIX: Centers the message when no data exists */
 .placeholder-state {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 2px dashed #334155; /* Dashed border from your screenshot */
+  color: #64748b;
+  text-align: center;
+}
+
+/* THE FIX: Formatting for AI Text */
+.optimized-text {
+  flex: 1;
+  white-space: pre-wrap !important; /* Forces next-line for bullets */
+  word-wrap: break-word;
+  overflow-y: auto;
+  color: #f1f5f9;
+  line-height: 1.6;
+  padding-right: 10px;
+}
+
+/* --- ACTION BUTTONS --- */
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #334155;
+}
+
+.actions button {
+  flex: 1;
+  padding: 12px;
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  color: #f1f5f9;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.actions button:hover {
+  background-color: #334155;
+  border-color: #0ea5e9;
+}
+/* .placeholder-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #334155;
   border-radius: 12px;
   color: #64748b;
   text-align: center;
@@ -279,9 +344,9 @@ input:focus, textarea:focus {
   opacity: 0.5;
 }
 
-/* --- Visibility & Bullet Points Fix --- */
+/* --- Visibility & Bullet Points Fix --- 
 .optimized-text {
-  white-space: pre-wrap !important; /* Forces next-line for bullets */
+  white-space: pre-wrap !important; /* Forces next-line for bullets
   word-wrap: break-word;
   color: #f1f5f9;
   line-height: 1.6;
@@ -289,11 +354,11 @@ input:focus, textarea:focus {
   margin-bottom: 20px;
 }
 
-/* --- Spacing Fix for Bottom Buttons --- */
+/* --- Spacing Fix for Bottom Buttons --- 
 .actions {
   display: flex;
   gap: 12px;
-  margin-top: auto; /* Pushes buttons to bottom */
+  margin-top: auto; /* Pushes buttons to bottom 
   padding-top: 20px;
   border-top: 1px solid #334155;
 }
@@ -304,4 +369,4 @@ input:focus, textarea:focus {
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
-}
+} */
