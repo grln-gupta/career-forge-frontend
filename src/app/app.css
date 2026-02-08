@@ -1,0 +1,72 @@
+:host {
+  font-family: 'Inter', sans-serif;
+  display: block;
+  background-color: #f3f4f6;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+h1 { color: #111827; margin-bottom: 0.5rem; }
+p { color: #6b7280; }
+
+.card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+.form-group { margin-bottom: 1rem; }
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #374151;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+textarea { resize: vertical; }
+
+.primary-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.primary-btn:hover { background-color: #1d4ed8; }
+.primary-btn:disabled { background-color: #93c5fd; cursor: not-allowed; }
+
+.result-box {
+  background: #f0fdf4;
+  padding: 1rem;
+  border-left: 4px solid #22c55e;
+  border-radius: 4px;
+  margin-top: 1rem;
+}
+
+.error { color: #dc2626; text-align: center; margin-top: 1rem; }
