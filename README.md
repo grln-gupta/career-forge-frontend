@@ -1,59 +1,58 @@
-# RefactorWeb
+# 🚀 Career Forge AI - Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.3.
+The client-side interface for **Career Forge**, a Full-Stack AI application designed to help developers engineer superior career assets. Built with **Angular 19**, this project emphasizes modern frontend architecture, clean UI/UX, and reactive integration with a Python AI backend.
 
-## Development server
+![Application Screenshot](https://via.placeholder.com/800x450?text=Insert+Your+Screenshot+Here) 
+*(Note: Replace the link above with the actual screenshot of your dashboard)*
 
-To start a local development server, run:
+## 🎨 UI & UX Design
 
-```bash
-ng serve
-```
+* **Dashboard Layout:** A professional "Dark Mode" interface inspired by IDEs (VS Code) to appeal to developer users.
+* **Split-Screen Workflow:** Real-time Input (Left) vs. AI Output (Right) for immediate feedback loops.
+* **Responsive Design:** Fully fluid CSS Grid layout that adapts to mobile and desktop viewports.
+* **Asset Management:** Custom SVG Iconography (Logo, Favicon) embedded directly for performance.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## 🏗 Technical Highlights
 
-## Code scaffolding
+* **Angular 19 Standalone Components:** Utilizing the latest Angular features to reduce boilerplate and remove `NgModule`.
+* **Reactive State:** Simple, effective local state management for handling asynchronous API loading states (`isLoading`, `errorMessage`).
+* **Service-Repository Pattern:** All HTTP logic isolated in `ApiService` for separation of concerns and testability.
+* **Utility Features:**
+    * **Clipboard Integration:** One-click copy functionality.
+    * **File Export:** Browser-based `.txt` file generation (Blob API).
+    * **Auto-Wake:** "Silent Ping" logic to warm up the backend server upon application initialization.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 🛠 Tech Stack
 
-```bash
-ng generate component component-name
-```
+* **Framework:** Angular 19 (CLI)
+* **Language:** TypeScript 5+
+* **Styling:** CSS3 (Grid, Flexbox, Custom Variables)
+* **HTTP Client:** Angular `HttpClient`
+* **Deployment:** Vercel / Netlify
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 🔧 Local Setup
 
-```bash
-ng generate --help
-```
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/YOUR_USERNAME/career-forge-web.git](https://github.com/YOUR_USERNAME/career-forge-web.git)
+    cd career-forge-web
+    ```
 
-## Building
+2.  **Install Dependencies:**
+    ```bash
+    npm install
+    ```
 
-To build the project run:
+3.  **Run Development Server:**
+    ```bash
+    ng serve
+    ```
+    Navigate to `http://localhost:4200/`.
 
-```bash
-ng build
-```
+## 🔄 Integration
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+This frontend consumes the **Career Forge API**. Ensure the backend is running locally or update `api.service.ts` to point to your live Render URL.
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```typescript
+// src/app/api.service.ts
+private apiUrl = '[https://your-backend-url.onrender.com/optimize](https://your-backend-url.onrender.com/optimize)';
