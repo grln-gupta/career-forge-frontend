@@ -6,13 +6,23 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  // Your live Render Backend URL
-  private apiUrl = 'https://career-forge-backend-j7lq.onrender.com/optimize';
+  
+  // The Live Backend URL
+  private apiUrl = 'https://career-forge-backend-j7lq.onrender.com/optimize'; 
 
   constructor(private http: HttpClient) { }
 
-  // ✅ THIS IS THE METHOD THAT WAS MISSING
-  optimizeContent(data: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, data);
+  // This is the function your component is looking for
+  optimizeText(text: string, mode: string, targetRole: string): Observable<any> {
+    
+    // Create the payload (what we send to Python)
+    const payload = {
+      text: text,
+      mode: mode,
+      target_role: targetRole
+    };
+
+    // Send the POST request
+    return this.http.post<any>(this.apiUrl, payload);
   }
 }

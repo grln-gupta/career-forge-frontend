@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from './app.service';
@@ -25,9 +25,10 @@ export class AppComponent implements OnInit {
   errorMessage: string = '';
   copySuccess: boolean = false; 
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
+    this.inputText = '';
     // It warms up the connection while the user is typing.
     console.log('⚡ Waking up Backend...');
     fetch('https://career-forge-backend-j7lq.onrender.com/docs')
@@ -63,35 +64,47 @@ export class AppComponent implements OnInit {
   }
 
   // API Call
-  runOptimization() {
-    if (!this.inputText.trim()) {
-      this.errorMessage = 'Please enter some text first.';
-      return;
-    }
-
+runOptimization() {
+    if (!this.inputText.trim()) return;
+    
     this.isLoading = true;
     this.errorMessage = '';
-    this.copySuccess = false;
+    
+    this.apiService.optimizeText(this.inputText, this.selectedMode, this.targetRole)
+      .subscribe({
+        next: (response: any) => {
+          console.log('🔥 API Data:', response); // Verify data in console
 
-    const payload = {
-      text: this.inputText,
-      mode: this.selectedMode,
-      role: this.targetRole
-    };
+          // 1. Handle if response is a String (rare but possible)
+          if (typeof response === 'string') {
+             try {
+               response = JSON.parse(response);
+             } catch (e) {
+               this.optimizedResult = response; // It was just plain text
+             }
+          }
 
-    this.apiService.optimizeContent(payload).subscribe({
-      next: (response: any) => {
-        this.optimizedResult = response.optimized;
-        this.isLoading = false;
-      },
-      error: (error) => {
-        console.error(error);
-        this.errorMessage = 'AI service is busy. Please try again in a moment.';
-        this.isLoading = false;
-      }
-    });
+          // 2. Assign the data (The key from your JSON is "optimized")
+          if (response && response.optimized) {
+            this.optimizedResult = response.optimized;
+          } else {
+            // Fallback if the key is missing
+            this.optimizedResult = "Error: API returned empty result.";
+          }
+
+          this.isLoading = false;
+          
+          // 3. FORCE THE UI TO UPDATE
+          this.cdr.detectChanges(); 
+        },
+        error: (error: any) => {
+          console.error('❌ Error:', error);
+          this.errorMessage = 'Failed to load data.';
+          this.isLoading = false;
+          this.cdr.detectChanges(); // Force update on error too
+        }
+      });
   }
-
   // Action Buttons
   copyToClipboard() {
     navigator.clipboard.writeText(this.optimizedResult).then(() => {
