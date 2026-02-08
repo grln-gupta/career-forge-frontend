@@ -1,60 +1,74 @@
 <div class="app-container">
-  
   <aside class="sidebar">
     <!-- <div class="brand">
       ⚡ CareerForge <span class="ai-tag">.ai</span>
     </div> -->
-<div class="brand" style="display: flex; align-items: center; gap: 10px;">
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M16 2L6 14H14L10 28L26 12H16L22 2Z" fill="#0ea5e9" stroke="#0ea5e9" stroke-width="2" stroke-linejoin="round"/>
+    <div class="brand" style="display: flex; align-items: center; gap: 10px">
+      <svg
+        width="32"
+        height="32"
+        viewBox="0 0 32 32"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M16 2L6 14H14L10 28L26 12H16L22 2Z"
+          fill="#0ea5e9"
+          stroke="#0ea5e9"
+          stroke-width="2"
+          stroke-linejoin="round"
+        />
       </svg>
-      
-      <span style="font-size: 1.25rem; font-weight: 800; color: #f8fafc;">
-        CareerForge <span style="color: #38bdf8;">.ai</span>
+
+      <span style="font-size: 1.25rem; font-weight: 800; color: #f8fafc">
+        CareerForge <span style="color: #38bdf8">.ai</span>
       </span>
     </div>
     <nav>
-      <div class="nav-item" 
-           [class.active]="selectedMode === 'resume'" 
-           (click)="setMode('resume')">
+      <div class="nav-item" [class.active]="selectedMode === 'resume'" (click)="setMode('resume')">
         📄 Resume ATS Fixer
       </div>
-      
-      <div class="nav-item" 
-           [class.active]="selectedMode === 'linkedin'" 
-           (click)="setMode('linkedin')">
+
+      <div
+        class="nav-item"
+        [class.active]="selectedMode === 'linkedin'"
+        (click)="setMode('linkedin')"
+      >
         🚀 LinkedIn Viral Post
       </div>
-      
-      <div class="nav-item" 
-           [class.active]="selectedMode === 'portfolio'" 
-           (click)="setMode('portfolio')">
+
+      <div
+        class="nav-item"
+        [class.active]="selectedMode === 'portfolio'"
+        (click)="setMode('portfolio')"
+      >
         💼 Case Study Builder
       </div>
     </nav>
   </aside>
 
   <main class="main-content">
-    
     <header>
       <h1>{{ getTitle() }}</h1>
       <p>{{ getSubtitle() }}</p>
     </header>
 
     <div class="workspace-grid">
-      
       <div class="input-panel">
-        
         <div class="form-group">
           <label>TARGET ROLE / PROFESSION <span class="required">*</span></label>
-          <input [(ngModel)]="targetRole" placeholder="e.g. Angular Developer">
+          <input [(ngModel)]="targetRole" placeholder="e.g. Angular Developer" />
         </div>
 
         <div class="form-group">
-          <br>
+          <br />
           <label>YOUR DRAFT / RAW NOTES <span class="required">*</span></label>
           <div class="textarea-wrapper">
-            <textarea [(ngModel)]="inputText" rows="12" placeholder="Paste your rough notes here..."></textarea>
+            <textarea
+              [(ngModel)]="inputText"
+              rows="12"
+              placeholder="Paste your rough notes here..."
+            ></textarea>
             <div class="icon-badge">🤖</div>
           </div>
         </div>
@@ -63,35 +77,35 @@
           <span *ngIf="isLoading" class="loader"></span>
           {{ isLoading ? 'OPTIMIZING...' : '✨ OPTIMIZE CONTENT' }}
         </button>
-        
+
         <p *ngIf="errorMessage" class="error-msg">{{ errorMessage }}</p>
       </div>
 
-   <div class="output-card">
-  <h3>
-    <span class="icon">✨</span> AI Optimized Result
-  </h3>
-  
-  <div class="result-box">
-   <p class="optimized-text">{{ optimizedResult }}</p>
+      <section class="panel output-panel">
+  <div *ngIf="isLoading" class="loader-container">
+    <div class="spinner"></div>
+    <p>AI is crafting your response...</p>
   </div>
-@if (optimizedResult && !isLoading) {
-  <div class="action-buttons">
-    <button class="secondary-btn" (click)="copyToClipboard()">
-      {{ copySuccess ? '✅ Copied!' : '📋 Copy Text' }}
-    </button>
 
-    <button class="icon-btn pdf-btn" (click)="exportToPdf()" title="Download PDF">
-      📄 PDF
-    </button>
+  <div *ngIf="!isLoading && optimizedResult" class="result-content">
+    <h3>✨ AI Optimized Result</h3>
+    <div class="optimized-text">
+      {{ optimizedResult }}
+    </div>
     
-    <button class="icon-btn doc-btn" (click)="exportToDocx()" title="Download Word">
-      📝 DOCX
-    </button>
+    <div class="actions">
+      <button (click)="copyToClipboard()">📋 Copy</button>
+      <button (click)="exportToPdf()">📄 PDF</button>
+      <button (click)="exportToDocx()">📝 DOCX</button>
+    </div>
   </div>
-  }
-</div>
 
+  <div *ngIf="!isLoading && !optimizedResult" class="placeholder-state">
+    <div class="icon-placeholder">🪄</div>
+    <p>Your optimized content will appear here...</p>
+    <small>Enter your notes and click optimize to begin.</small>
+  </div>
+</section>
     </div>
   </main>
 </div>

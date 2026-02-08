@@ -223,3 +223,85 @@ input:focus, textarea:focus {
   margin-top: 1rem;
   text-align: center;
 }
+.optimized-text {
+  /* THIS IS THE FIX FOR BULLET POINTS */
+  white-space: pre-wrap !important; 
+  word-wrap: break-word;
+  
+  /* THIS FIXES VISIBILITY (Prevents text from cutting off) */
+  color: #e2e8f0;
+  line-height: 1.6;
+  font-size: 1rem;
+  padding: 10px;
+}
+
+/* Ensure the container allows scrolling if text is long */
+.result-content {
+  overflow-y: auto !important;
+  max-height: 600px; /* Adjust based on your screen size */
+}
+
+/* Space between the Textarea and the Target Role input */
+.form-group {
+  margin-bottom: 30px !important; 
+}
+
+/* Space for the Bottom Buttons */
+.actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 25px !important; /* Adds space above Copy/PDF/DOCX buttons */
+  padding-bottom: 20px;       /* Adds space at the very bottom of the panel */
+}
+
+/* Ensure the main Optimize button isn't touching the inputs */
+.primary-btn {
+  margin-top: 20px !important;
+}
+/* --- Placeholder Message Styling --- */
+.placeholder-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #334155; /* Dashed border from your screenshot */
+  border-radius: 12px;
+  color: #64748b;
+  text-align: center;
+  padding: 40px;
+  background-color: rgba(30, 41, 59, 0.2);
+}
+
+.icon-placeholder {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  opacity: 0.5;
+}
+
+/* --- Visibility & Bullet Points Fix --- */
+.optimized-text {
+  white-space: pre-wrap !important; /* Forces next-line for bullets */
+  word-wrap: break-word;
+  color: #f1f5f9;
+  line-height: 1.6;
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+/* --- Spacing Fix for Bottom Buttons --- */
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: auto; /* Pushes buttons to bottom */
+  padding-top: 20px;
+  border-top: 1px solid #334155;
+}
+
+.actions button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
