@@ -65,32 +65,31 @@
         
         <p *ngIf="errorMessage" class="error-msg">{{ errorMessage }}</p>
       </div>
+@if (optimizedResult && !isLoading) {
+   <div class="output-card">
+  <h3>
+    <span class="icon">✨</span> AI Optimized Result
+  </h3>
+  
+  <div class="result-box">
+    <p>{{ optimizedResult }}</p>
+  </div>
 
-      <div class="output-panel">
-        
-        <div class="output-header">
-          <label>AI OPTIMIZED RESULT</label>
-          
-          <div class="actions" *ngIf="optimizedResult">
-            <button class="icon-btn" (click)="copyToClipboard()" title="Copy to Clipboard">
-              {{ copySuccess ? '✅ Copied' : '📋 Copy' }}
-            </button>
-            <button class="icon-btn" (click)="downloadContent()" title="Download as .txt">
-              ⬇️ Export
-            </button>
-          </div>
-        </div>
-        
-        <div class="result-box" [class.has-content]="optimizedResult">
-          <p *ngIf="!optimizedResult" class="placeholder-text">
-            Your optimized content will appear here...
-          </p>
-          <p *ngIf="optimizedResult" class="final-text">
-            {{ optimizedResult }}
-          </p>
-        </div>
-      </div>
+  <div class="action-buttons">
+    <button class="secondary-btn" (click)="copyToClipboard()">
+      {{ copySuccess ? '✅ Copied!' : '📋 Copy Text' }}
+    </button>
 
+    <button class="icon-btn pdf-btn" (click)="exportToPdf()" title="Download PDF">
+      📄 PDF
+    </button>
+    
+    <button class="icon-btn doc-btn" (click)="exportToDocx()" title="Download Word">
+      📝 DOCX
+    </button>
+  </div>
+</div>
+}
     </div>
   </main>
 </div>

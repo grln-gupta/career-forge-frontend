@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from './app.service';
 import { HttpClientModule } from '@angular/common/http';
+import { jsPDF } from 'jspdf';
+import { Document, Packer, Paragraph, TextRun } from 'docx';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-root',
@@ -97,13 +100,42 @@ export class AppComponent implements OnInit {
     });
   }
 
-  downloadContent() {
-    const blob = new Blob([this.optimizedResult], { type: 'text/plain' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `career-forge-${this.selectedMode}-${Date.now()}.txt`;
-    a.click();
-    window.URL.revokeObjectURL(url);
+  exportToPdf() {
+    if (!this.optimizedResult) return;
+
+    const doc = new jsPDF();
+    
+    // Split text so it fits within the page width (180mm)
+    const splitText = doc.splitTextToSize(this.optimizedResult, 180);
+    
+    doc.setFontSize(12);
+    doc.text(splitText, 15, 20); // (text, x, y)
+    doc.save('career-forge-optimized.pdf');
+  }
+exportToDocx() {
+    if (!this.optimizedResult) return;
+
+    // Create a new Word Document
+    const doc = new Document({
+      sections: [{
+        properties: {},
+        children: [
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: this.optimizedResult,
+                font: "Calibri",
+                size: 24, // 24 = 12pt
+              }),
+            ],
+          }),
+        ],
+      }],
+    });
+
+    // Generate and save
+    Packer.toBlob(doc).then((blob: any) => {
+      saveAs(blob, 'career-forge-optimized.docx');
+    });
   }
 }
