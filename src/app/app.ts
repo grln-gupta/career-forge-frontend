@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from './app.service';
@@ -11,7 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   // Data Models
   inputText: string = '';
   selectedMode: string = 'resume'; // <--- CHANGED TO RESUME
@@ -24,6 +24,14 @@ export class AppComponent {
 
   constructor(private apiService: ApiService) {}
 
+  ngOnInit(): void {
+    // It warms up the connection while the user is typing.
+    console.log('⚡ Waking up Backend...');
+    fetch('https://career-forge-backend-j7lq.onrender.com/docs')
+      .then(() => console.log('✅ Backend is awake and ready!'))
+      .catch(() => console.log('⚠️ Backend waking up...'));
+  
+  }
   // Sidebar Logic
   setMode(mode: string) {
     this.selectedMode = mode;
