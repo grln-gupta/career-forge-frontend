@@ -2,8 +2,7 @@
 
 The client-side interface for **Career Forge**, a Full-Stack AI application designed to help developers engineer superior career assets. Built with **Angular 19**, this project emphasizes modern frontend architecture, clean UI/UX, and reactive integration with a Python AI backend.
 
-![Application Screenshot](https://via.placeholder.com/800x450?text=Insert+Your+Screenshot+Here) 
-*(Note: Replace the link above with the actual screenshot of your dashboard)*
+![Application Screenshot](https://github.com/grln-gupta/career-forge-frontend/blob/main/src/dashboard-preview.png)
 
 ## 🎨 UI & UX Design
 
