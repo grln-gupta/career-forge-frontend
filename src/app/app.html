@@ -1,47 +1,35 @@
-<div class="container">
-  <header>
-    <h1>🚀 Career Forge AI</h1>
-    <p>Optimize your career assets with Google Gemini</p>
-  </header>
+<div style="padding: 20px; font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+  
+  <h1>Career Forge AI</h1>
 
-  <main>
-    <div class="card input-section">
-      
-      <div class="form-group">
-        <label>Target Role:</label>
-        <input [(ngModel)]="targetRole" placeholder="e.g. Senior Product Manager" />
-      </div>
+  <div style="margin-bottom: 15px;">
+    <label>Target Role:</label><br>
+    <input [(ngModel)]="targetRole" placeholder="e.g. Senior Java Dev" style="padding: 8px; width: 100%;">
+  </div>
 
-      <div class="form-group">
-        <label>Mode:</label>
-        <select [(ngModel)]="selectedMode">
-          <option value="resume">Resume Bullet Point</option>
-          <option value="linkedin">LinkedIn Post</option>
-          <option value="cover-letter">Cover Letter Intro</option>
-        </select>
-      </div>
+  <div style="margin-bottom: 15px;">
+    <label>Mode:</label><br>
+    <select [(ngModel)]="selectedMode" style="padding: 8px; width: 100%;">
+      <option value="resume">Resume Bullet Point</option>
+      <option value="linkedin">LinkedIn Post</option>
+      <option value="cover-letter">Cover Letter</option>
+    </select>
+  </div>
 
-      <div class="form-group">
-        <label>Your Draft Text:</label>
-        <textarea 
-          [(ngModel)]="inputText" 
-          rows="5" 
-          placeholder="Paste your rough bullet point or thought here...">
-        </textarea>
-      </div>
+  <div style="margin-bottom: 15px;">
+    <label>Draft Text:</label><br>
+    <textarea [(ngModel)]="inputText" rows="5" style="width: 100%; padding: 8px;"></textarea>
+  </div>
 
-      <button class="primary-btn" (click)="runOptimization()" [disabled]="isLoading">
-        {{ isLoading ? 'Optimizing...' : getButtonText() }}
-      </button>
+  <button (click)="runOptimization()" [disabled]="isLoading" style="padding: 10px 20px; background: black; color: white; border: none; cursor: pointer;">
+    {{ isLoading ? 'Working...' : 'Optimize' }}
+  </button>
 
-      <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
-    </div>
+  <p *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</p>
 
-    <div *ngIf="optimizedResult" class="card result-section">
-      <h3>✨ AI Optimized Result:</h3>
-      <div class="result-box">
-        <p>{{ optimizedResult }}</p>
-      </div>
-    </div>
-  </main>
+  <div *ngIf="optimizedResult" style="margin-top: 20px; padding: 15px; background: #f0f0f0; border-left: 4px solid black;">
+    <strong>Result:</strong>
+    <p style="white-space: pre-wrap;">{{ optimizedResult }}</p>
+  </div>
+
 </div>
